@@ -80,6 +80,15 @@ DATABASES = {
     }
 }
 
+# Add EMAIL_BACKEND and DEFAULT_FROM_EMAIL here
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Specify the email backend
+EMAIL_HOST = 'smtpout.secureserver.net'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True  # True for GoDaddy's secure server
+EMAIL_HOST_USER = 'your_godaddy_email@example.com'
+EMAIL_HOST_PASSWORD = 'your_godaddy_email_password'
+DEFAULT_FROM_EMAIL = 'your_email_address@costcurve.ai.com'         # # Replace with your actual email address
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -98,6 +107,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# You can add FRONTEND_URL here or at the bottom
+FRONTEND_URL = 'http://localhost:3000/verify-email/' # Adjust this to match your frontend's URL
 
 
 # Internationalization
