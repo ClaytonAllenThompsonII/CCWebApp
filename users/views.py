@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
+from django.http import HttpResponse
+from django.template import loader
+from .models import User
 
 
 # Create your views here.
@@ -59,3 +62,17 @@ def verify_email(request, verification_code): #email verification logic using co
         messages.error(request, 'Invalid verification code.')
         return redirect('register')  # Or redirect to a dedicated error page
 
+def main(request):
+  """Renders and returns the main landing page (main.html) template.
+
+This view function is responsible for:
+
+1. Fetching the `main.html` template using Django's template loader.
+2. Rendering the template with any necessary context data (if applicable).
+3. Returning an HttpResponse object containing the rendered HTML content.
+
+This function serves as the entry point for the users Django app, acting as
+the primary landing page when users first visit the application.
+"""
+  template = loader.get_template('main.html')
+  return HttpResponse(template.render())
