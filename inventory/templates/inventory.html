@@ -1,0 +1,100 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <title>Image Upload with Inventory Product Classification</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1> 🪩Cost Curve</h1>
+        <br>
+        <h2>Inventory image & label upload</h2>
+        <br>
+    </header>
+  
+  
+  <br>
+  <p> This web application is designed to facilitate the collection of <b>labeled image training data.</b> </p>
+  <br>
+  <p> To add training data, follow the steps below:</p>
+  <br>
+  <main>
+  
+    <div class="grid-container">
+    <div> <p> <b>Step 2.</b> Select the data label from the Inventory Classification section that matches the inventory product.</p>
+    <br>
+    <form id="upload-form">
+           
+            <label for="type">Inventory Classification:</label>
+            <br>
+            <select id="type" name="type">
+                <option value="">-- Select a Label --</option>
+                <option value="grouper">Grouper</option>
+                <option value="salmon">Salmon</option>
+                <option value="trout">Trout</option>
+                <option value="mussels">Mussels</option>
+                <option value="sea-scallops">Sea Scallops</option>
+                <option value="crab">Crab</option>
+                <option value="squid">Squid</option>
+                <option value="mahi">Mahi</option>
+                <option value="shrimp">Shrimp</option>
+                <option value="anchovies">Anchovies</option>
+                <option value="clams">Clams</option>
+                <option value="seafood-base">Seafood Base</option>
+                <option value="sea-bass">Sea Bass (Bronzino)</option>
+                <option value="cobia">Cobia</option>
+                <option value="snapper">Snapper</option>
+                <option value="halibut">Halibut</option>
+                <option value="red-fish">Red Fish</option>
+                <option value="swordfish">Swordfish</option>
+                <option value="flounder">Flounder</option>
+            </select>
+            <br></div>
+
+  
+            <div>
+            <br>
+            <p> <b>Step 3.</b> Upload product image by chooseing a file<P> 
+            <br>
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            <br>
+            </div>
+   <div>
+    <br>
+  <p> <b>Step 4.</b> Press the upload button.</p>
+  <br>
+  <button type="submit">Upload</button></div>         
+  
+  <div>
+        </form>
+        <div></div>
+        <br>
+        <img id="uploaded-image" src="" alt="Uploaded image preview"></div>
+    
+</div>
+    <br>    
+    <p> Step 1. Take a photo of the inventory iteration using a smart phone 📲.</p>
+    <p> Step 2. Select the data label from the Inventory Classification section that matches the inventory product.</p>
+    <p> Step 3. Upload your product image by chooseing a file.</p>
+    <p> Step 4. Press the upload button.</p>
+    </main>
+    
+    <script src="script.js"></script>
+   
+  
+</body>
+<br>
+<footer><p>Sense the world 🌎, Compute to understand 🖥, Take action 🎬</p></footer>
+</html>
