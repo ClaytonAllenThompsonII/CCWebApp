@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
 from django.http import HttpResponse
 from django.template import loader
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import User
 
 
@@ -41,7 +41,7 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
-def verify_email(request, verification_code): #email verification logic using code to activate user's account. 
+def verify_email(request, verification_code):
     """Verifies a user's email using the provided verification code.
     Args:
         request: The Django HTTP request object.
@@ -61,18 +61,61 @@ def verify_email(request, verification_code): #email verification logic using co
     except User.DoesNotExist:
         messages.error(request, 'Invalid verification code.')
         return redirect('register')  # Or redirect to a dedicated error page
-
-def main(request):
+    
+def home(request):
   """Renders and returns the main landing page (main.html) template.
-
 This view function is responsible for:
 
-1. Fetching the `main.html` template using Django's template loader.
+1. Fetching the `home.html` template using Django's template loader.
 2. Rendering the template with any necessary context data (if applicable).
 3. Returning an HttpResponse object containing the rendered HTML content.
 
 This function serves as the entry point for the users Django app, acting as
 the primary landing page when users first visit the application.
 """
-  template = loader.get_template('main.html')
+  template = loader.get_template('home.html')
   return HttpResponse(template.render())
+
+
+
+
+@login_required
+def profile(request):
+    """Handles user profile viewing and updating requests.
+
+This view serves two primary purposes:
+
+1. **GET requests**: Renders the profile page, displaying the user's current
+   information and forms for updating their profile and account details.
+2. **POST requests**: Processes form submissions for updating the user's profile
+   and account information. If validation is successful, saves the updated
+   data and redirects to the profile page with a success message.
+
+Key actions:
+
+- Retrieves and instantiates UserUpdateForm and ProfileUpdateForm.
+- Handles form validation and saving upon successful POST requests.
+- Renders the `users/profiles.html` template with relevant context data.
+
+Requires authentication: This view requires a logged-in user to access.
+"""
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.users)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'users/profiles.html, context')

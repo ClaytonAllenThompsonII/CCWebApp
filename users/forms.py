@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User 
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
@@ -27,7 +27,6 @@ class UserRegisterForm(UserCreationForm):
     Raises:
         ValidationError: If the passwords entered in `password1` and `password2`
             fields do not match.
-
     Returns:
         A valid `UserRegisterForm` instance containing the submitted user data.
     """
@@ -49,7 +48,6 @@ class UserRegisterForm(UserCreationForm):
         Returns:
             The confirmed password if valid, otherwise raises a ValidationError.
         """
-
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
@@ -59,6 +57,8 @@ class UserRegisterForm(UserCreationForm):
 
 
     def save(self, commit=True):
+
+
         """Saves the user, sets their email address, and sends a verification email.
 
         This method overrides the base `save` method to additionally set the
@@ -77,3 +77,49 @@ class UserRegisterForm(UserCreationForm):
             user.save()
             user.send_verification_email()  # Assuming a function for sending verification email in utils.py
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    """Form for updating existing user accounts.
+
+This form inherits from `forms.ModelForm` and is based on the `User` model.
+It provides fields for:
+
+- username: The user's username (editable).
+- email: The user's email address (editable).
+
+Key features:
+
+- Inherits validation logic for username and email fields from the model.
+- Doesn't include password fields for security reasons. Password updates
+  should be handled separately.
+"""
+    email = forms.EmailField()
+    class Meta:
+        """Configures the model and fields for the UserUpdateForm.
+        - model: Specifies the User model as the basis for the form.
+        - fields: Lists the fields to include in the form: username and email.
+        """ 
+        model = User
+        fields = ['username', 'email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    """Form for updating profile information.
+
+This form inherits from `forms.ModelForm` and is based on the `Profile` model.
+It provides a field for:
+
+- image: The user's profile image (for uploading).
+
+Key features:
+
+- Handles image uploads using Django's file handling mechanisms.
+- Uses the `ImageField` to store the profile image in the database.
+"""
+    class Meta:
+        """Configures the model and fields for the ProfileUpdateForm.
+        - model: Specifies the Profile model as the basis for the form.
+        - fields: Lists the field to include in the form: image.
+        """
+        model = Profile
+        fields = ["image"]
