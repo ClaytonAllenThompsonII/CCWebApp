@@ -21,7 +21,8 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- Write your comments here -->
+        <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
             <a class="navbar-brand font-weight-bold" href="{% url 'UploadPage-home' %}"><i class="fas fa-file"></i> CostCurve.ai</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -30,13 +31,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'UploadPage-home' %}"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url '' %}"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
 
             {% if user.is_authenticated %}
-            <a href="{% url 'Inventory' user %}" class="btn text-white m-2"><i class="fas fa-user-shield"></i> Inventory</a>
-            <a href="{% url 'Invoice' user %}" class="btn text-white m-2"><i class="fas fa-user-shield"></i> Invoice</a>
-            <a href="{% url 'Analytics' user %}" class="btn text-white m-2"><i class="fas fa-user-shield"></i> Analytics</a>
+            <a href="{% url 'Inventory' user %}" class="btn text-white m-2"><i class="far fa-lemon"></i> Inventory</a>
+            <a href="{% url 'Invoice' user %}" class="btn text-white m-2"><i class="fas fa-folder-open"></i> Invoice</a>
+            <a href="{% url 'Analytics' user %}" class="btn text-white m-2"><i class="fas fa-chart-bar"></i> Analytics</a>
             <a href="{% url 'profile' %} " class="btn text-white m-2"><i class="fas fa-user"></i> {{ user.username }}</a>
             <a href="{% url 'logout' %} " class="btn text-white m-2"><i class="fas fa-sign-out-alt"></i> Log Out</a>
 
@@ -57,6 +58,7 @@
                   </div>
               {% endfor %}
             {% endif %}
+        <!-- Content should appear here based on the  -->
         {% block content %}
           
         {% endblock  %}
@@ -70,4 +72,6 @@
     <script src="{% static 'UploadPage/main.js' %}"></script>
 
     </body>
+    <br>
+    <footer><p>Sense the world 🌎, Compute to understand 🖥, Take action 🎬</p></footer>
 </html>
