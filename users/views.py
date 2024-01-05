@@ -3,10 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
-from django.http import HttpResponse
-from django.template import loader
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from .models import User
+from .models import Profile
 
 
 # Create your views here.
@@ -49,7 +47,7 @@ def verify_email(request, verification_code):
     Returns:
         An HTTP response object corresponding to the success message or error page.
     """
-    User = get_user_model()  # Get the User model
+    Profile = get_user_model()  # Get the User model
     try:
         user = User.objects.get(verification_code=verification_code)
         user.is_active = True
@@ -61,23 +59,6 @@ def verify_email(request, verification_code):
     except User.DoesNotExist:
         messages.error(request, 'Invalid verification code.')
         return redirect('register')  # Or redirect to a dedicated error page
-    
-def home(request):
-  """Renders and returns the main landing page (main.html) template.
-This view function is responsible for:
-
-1. Fetching the `home.html` template using Django's template loader.
-2. Rendering the template with any necessary context data (if applicable).
-3. Returning an HttpResponse object containing the rendered HTML content.
-
-This function serves as the entry point for the users Django app, acting as
-the primary landing page when users first visit the application.
-"""
-  template = loader.get_template('home.html')
-  return HttpResponse(template.render())
-
-
-
 
 @login_required
 def profile(request):
@@ -118,4 +99,4 @@ Requires authentication: This view requires a logged-in user to access.
         'p_form': p_form
     }
 
-    return render(request, 'users/profiles.html, context')
+    return render(request, 'users/profiles.html', context)
