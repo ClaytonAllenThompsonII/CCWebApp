@@ -13,7 +13,6 @@ def send_verification_email(user): # Defines the function for sending verificati
     Returns:
         None
     """
-
     subject = 'Verify your email address' #Sets the subject line of the email.
     text_content = f'Please click the link below to verify your email address:\n{settings.FRONTEND_URL}/verify-email/{user.verification_code}' #Creates the plain text content of the email, including a link to the verification URL.
     html_content = f'<p>Please click the link below to verify your email address:</p><p><a href="{settings.FRONTEND_URL}/verify-email/{user.verification_code}">Verify Email</a></p>' #Creates the HTML content of the email, providing a more visually appealing format for the verification link.
