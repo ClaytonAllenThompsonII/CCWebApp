@@ -6,9 +6,17 @@ body {
 }
 
 header {
-    background-color: #002FA7;
-    color: #fff;
-    padding: 1rem;
+  background-color: rgba(0, 47, 167, 0.6);
+  background: linear-gradient(
+  to right,
+  rgba(0, 47, 167, 0.8) 0%,
+  rgba(26, 89, 180, 0.8) 50%,
+  rgba(0, 47, 167, 0.8) 100%
+);
+  color: #007FFF;
+  padding: 1rem;
+  display: block;
+  animation: pulse 1s infinite;
 }
 
 nav {
@@ -88,9 +96,7 @@ main {
     font-size: 10px;
   }
 
-  .content-section {
-    
-  }
+  
 
   footer {
     background-color: rgba(255, 255, 255, 0.8);
