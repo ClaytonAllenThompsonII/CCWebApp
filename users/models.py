@@ -19,7 +19,7 @@ class Profile(models.Model):
         - phone (int, optional): The user's phone number.
         - joined_date (date, optional): The date the user joined.
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, auto_created=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
