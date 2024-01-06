@@ -1,11 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .models import InventoryItem
-from django.utils.logging import get_logger
-
-
-# Use the logger within your view
-logger = get_logger(__name__)
 
 @csrf_exempt
 def upload_image(request):
@@ -26,6 +21,10 @@ def upload_image(request):
         # Check if image  or label is present
         if not image or not label:
             return JsonResponse({'error', 'Missing image or label'}, status=400)
+        
+          # Check if the user is authenticated
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'User not authenticated'}, status=401)
         
         # create model instance
         item = InventoryItem.objects.create(label=label, user=request.user) # assign logged-in user 

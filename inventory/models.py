@@ -32,10 +32,10 @@ class InventoryItem(models.Model):
         item_data = {
             'filename': self.filename, # Store the filename of the uploaded image in S3
             'label': self.label, # Store the assigned label for the inventory item
-            'timestamp': self.timestamp, # Format the timestamp as a date string for DynamoDB
+            'timestamp': self.timestamp, # Might need to format the timestamp as a date string for DynamoDB
             'user_id': self.user.id # Store the ID of the user who uploaded the item:
         }
         # Call the function to create the item in DynamoDB:
-        storage_backend.create_inventroy_item(item_data)
+        storage_backend.create_inventory_item(item_data)
 
 

@@ -2,7 +2,6 @@ import os
 import uuid
 from botocore.config import Config
 import boto3
-
 class AWSStorageBackend:
     """Handles interactions with AWS S3 and DynamoDB for image storage and metadata management."""   
     def __init__(self) -> None:
@@ -24,9 +23,15 @@ class AWSStorageBackend:
             raise Exception(f'Error uploading file to S3: {e}')
     
     def create_inventroy_item(self, item_data):
-        """Creates an item in the DynamoDB table with the provided data."""
+        """Creates an item in the DynamoDB table with the provided data.
+        - Calls the put_item method on the DynamoDB client instance-> responsible for creating or updating single item in DynamoDB table.
+        - Specifies the name of the DynamoDB table where the item should be stored. 
+        - This value is retrieved from the environment variable DYNAMODB_TABLE_NAME.
+        - Provides the actual data to be inserted into the item. It's a dictionary containing the attribute names and values for the new item.
+
+          """
         try:
-            self.dynamodb_client.put_item(TableName=self.table_name, Item=item_data)
+            self.dynamodb_client.put_item(TableName=self.table_name, Item=item_data) 
         except Exception as e:
             raise Exception(f'Error creating item in DynamoDB: {e}')
 
