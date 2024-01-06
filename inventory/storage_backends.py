@@ -1,13 +1,7 @@
-import boto3
-from botocore.config import Config
 import os
 import uuid
-
-from boto3.dynamodb import resource
-from django.http import HttpResponse
-from .models import InventoryItem
-
-
+from botocore.config import Config
+import boto3
 
 class AWSStorageBackend:
     """Handles interactions with AWS S3 and DynamoDB for image storage and metadata management."""   

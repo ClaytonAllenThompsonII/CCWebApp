@@ -28,11 +28,14 @@ class InventoryItem(models.Model):
         self.filename = filename # stores the S3 filename in the model instance
         self.save() # persists the updated model instance with the filename in the data base
 
-        storage_backend.create_inventroy_item({
-            'filename': self.filename,
-            'label': self.label,
-            'timestamp': self.timestamp.date(), # format timestamp for DynamoDB
-            'user_id': self.user.id # store user ID in DynamoDB
-        })
+        # Create a dictionary to hold the item data for DynamoDB:
+        item_data = {
+            'filename': self.filename, # Store the filename of the uploaded image in S3
+            'label': self.label, # Store the assigned label for the inventory item
+            'timestamp': self.timestamp, # Format the timestamp as a date string for DynamoDB
+            'user_id': self.user.id # Store the ID of the user who uploaded the item:
+        }
+        # Call the function to create the item in DynamoDB:
+        storage_backend.create_inventroy_item(item_data)
 
 

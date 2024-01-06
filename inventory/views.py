@@ -1,8 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .models import InventoryItem
-from .storage_backends import AWSStorageBackend
-
 from django.utils.logging import get_logger
 
 
@@ -11,7 +9,15 @@ logger = get_logger(__name__)
 
 @csrf_exempt
 def upload_image(request):
+    """
+    Handles the image upload request.
 
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        JsonResponse: A JSON response indicating the result of the image upload.
+    """
     if request.method == 'POST':
         # Get the uploaded image file and selected label from request
         image = request.FILES.get('image')
