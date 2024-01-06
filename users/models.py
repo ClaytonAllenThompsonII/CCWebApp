@@ -20,14 +20,15 @@ class Profile(models.Model):
         - joined_date (date, optional): The date the user joined.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     phone = models.IntegerField(null=True)
     joined_date = models.DateField(null=True)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    
 
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f'{self.user.username} Profile'
     
     def save(self, *args, **kwargs):
