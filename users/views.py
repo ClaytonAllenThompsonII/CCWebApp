@@ -47,16 +47,17 @@ def verify_email(request, verification_code):
     Returns:
         An HTTP response object corresponding to the success message or error page.
     """
-    Profile = get_user_model()  # Get the User model
+    profile_model = get_user_model()  # Get the User model
     try:
-        user = User.objects.get(verification_code=verification_code)
+        user_instance = profile_model.objects.get(verification_code=verification_code)
+        user = user_instance.user
         user.is_active = True
         user.verification_code = ''
         user.save()
         update_last_login(None, user)  # Update last login
         messages.success(request, 'Your email has been verified! You are now able to log in.')
         return redirect('login')
-    except User.DoesNotExist:
+    except profile_model.DoesNotExist:
         messages.error(request, 'Invalid verification code.')
         return redirect('register')  # Or redirect to a dedicated error page
 
@@ -81,7 +82,7 @@ Key actions:
 Requires authentication: This view requires a logged-in user to access.
 """
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.users)
+        u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
