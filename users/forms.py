@@ -1,3 +1,17 @@
+""" Module for user-related forms and models.
+
+This module defines forms and models for managing user data, including user registration,
+profile updates, and account details. It leverages Django's authentication system and ORM.
+
+Key classes:
+    - UserRegisterForm: Form for new user registration with password confirmation and email verification.
+    - UserUpdateForm: Form for updating existing user accounts (username and email).
+    - ProfileUpdateForm: Form for updating user profile information, including image uploads.
+
+Dependencies:
+    - forms module from Django for creating form classes.
+    - User and models module from Django for defining the User model.
+    - Image, BytesIO, and ImageField from PIL (Python Imaging Library)"""
 from django import forms
 from django.contrib.auth.models import User 
 from django.contrib.auth.forms import UserCreationForm
@@ -36,6 +50,12 @@ class UserRegisterForm(UserCreationForm):
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
 
     class Meta:
+        """Configures the model and fields for the UserRegisterForm.
+        
+        Attributes:
+            model: Specifies the User model as the basis for the form.
+            fields: Lists the fields to include in the form: username, email, password1, password2.
+        """
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
@@ -57,8 +77,6 @@ class UserRegisterForm(UserCreationForm):
 
 
     def save(self, commit=True):
-
-
         """Saves the user, sets their email address, and sends a verification email.
 
         This method overrides the base `save` method to additionally set the
@@ -75,7 +93,8 @@ class UserRegisterForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
-            user.send_verification_email()  # Assuming a function for sending verification email in utils.py
+            # Assuming a function for sending verification email in utils.py
+            user.send_verification_email()  
         return user
 
 
@@ -99,7 +118,7 @@ Key features:
         """Configures the model and fields for the UserUpdateForm.
         - model: Specifies the User model as the basis for the form.
         - fields: Lists the fields to include in the form: username and email.
-        """ 
+        """
         model = User
         fields = ['username', 'email']
 

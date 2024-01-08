@@ -14,8 +14,9 @@ from PIL import Image
 class Profile(models.Model):
     """
     Represents a user in the system.
-
     Attributes:
+        - user (User): One-to-one relationship with the Django User model.
+        - image (ImageField): Profile picture of the user.
         - firstname (str): The user's first name.
         - lastname (str): The user's last name.
         - phone (int, optional): The user's phone number.
@@ -31,6 +32,11 @@ class Profile(models.Model):
 
 
     def __str__(self):
+        """
+        Returns a string representation of the user's profile.
+        - If the user is associated, the string will be in the format "{username} Profile".
+        - If there's no associated user, the string will be "Profile without user ({profile_id})".
+        """
         if self.user:
             return f'{self.user.username} Profile'
         else:
@@ -38,6 +44,11 @@ class Profile(models.Model):
         
     
     def save(self, *args, **kwargs):
+        """ Custom Save method for the Profile Model
+        - Resizes and saves the user's profile image to ensure it does not exceed 300x300 pixels.
+        - Args:
+            *args: Additional arguments passed to the save method.
+            **kwargs: Additional keyword arguments passed to the save method"""
         super(Profile, self).save(*args, **kwargs)
 
         img = Image.open(self.image)
