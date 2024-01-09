@@ -26,21 +26,23 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
+    address_1 = models.CharField(max_length=255)
+    address_2 = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    zip_code = models.CharField(max_length=10)
     phone = models.IntegerField(null=True)
     joined_date = models.DateField(null=True)
-    
 
 
     def __str__(self):
-        """
-        Returns a string representation of the user's profile.
-        - If the user is associated, the string will be in the format "{username} Profile".
-        - If there's no associated user, the string will be "Profile without user ({profile_id})".
-        """
-        if self.user:
-            return f'{self.user.username} Profile'
+        """ Returns a string representation of the user's profile"""
+        if self.user
+            return f'{self.user.username} Profile ' 
         else:
             return f'Profile without user ({self.pk})'
+        return self.user.username
+    
         
     
     def save(self, *args, **kwargs):
